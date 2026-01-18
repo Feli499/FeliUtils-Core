@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.feli490.utils.core</groupId>
-    <artifactId>FeliUtilsCore</artifactId>
+    <artifactId>FeliUtils-Core</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>

@@ -74,10 +74,10 @@
 
     <scm>
         <developerConnection>
-            scm:git:https://github.com/Feli499/FeliUtils.git
+            scm:git:https://github.com/Feli499/FeliUtils-Core.git
         </developerConnection>
         <connection>
-            scm:git:https://github.com/Feli499/FeliUtils.git
+            scm:git:https://github.com/Feli499/FeliUtils-Core.git
         </connection>
         <tag>HEAD</tag>
     </scm>

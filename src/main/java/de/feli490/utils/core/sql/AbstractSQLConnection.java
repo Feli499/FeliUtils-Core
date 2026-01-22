@@ -25,9 +25,10 @@ public abstract class AbstractSQLConnection implements SQLConnection {
                 connection = buildConnection();
                 return;
             } catch (SQLException e) {
+                if (tries == maxTries - 1) //On final try throw detailed exception
+                    throw new SQLException("Could not connect to database!", e);
                 logger.warning("Could not connect to database! Retrying... (" + (tries + 1) + "/" + maxTries + ")");
             }
-        throw new SQLException("Could not connect to database!");
     }
 
     @Override

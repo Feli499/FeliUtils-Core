@@ -2,26 +2,32 @@ package de.feli490.utils.core.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public abstract class AbstractSQLConnection implements SQLConnection {
 
+    private final Logger logger;
     private final int maxTries;
     private Connection connection;
 
-    public AbstractSQLConnection(int maxTries) throws SQLException {
+    public AbstractSQLConnection(Logger logger, int maxTries) {
+        this.logger = logger;
         this.maxTries = maxTries;
-        connect();
-    }
-
-    public AbstractSQLConnection() throws SQLException {
-        this(3);
     }
 
     protected abstract Connection buildConnection() throws SQLException;
 
     @Override
-    public void connect() throws SQLException {
-        connection = buildConnection();
+    public synchronized void connect() throws SQLException {
+
+        for (int tries = 0; tries < maxTries; tries++)
+            try {
+                connection = buildConnection();
+                return;
+            } catch (SQLException e) {
+                logger.warning("Could not connect to database! Retrying... (" + (tries + 1) + "/" + maxTries + ")");
+            }
+        throw new SQLException("Could not connect to database!");
     }
 
     @Override

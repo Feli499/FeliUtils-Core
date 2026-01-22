@@ -3,13 +3,14 @@ package de.feli490.utils.core.sql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public abstract class AbstractJdbcSQLConnection extends AbstractSQLConnection {
 
     private final SQLConfig config;
 
-    public AbstractJdbcSQLConnection(SQLConfig config) throws SQLException {
-        super();
+    public AbstractJdbcSQLConnection(Logger logger, SQLConfig config, int maxTries) {
+        super(logger, maxTries);
         this.config = config;
     }
 

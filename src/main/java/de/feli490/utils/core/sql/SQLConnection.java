@@ -10,7 +10,9 @@ public interface SQLConnection extends Closeable {
 
     void connect() throws SQLException;
 
-    PreparedStatement createPreparedStatement(String sql) throws SQLException;
+    PreparedStatement prepareStatement(String sql) throws SQLException;
+
+    boolean execute(String sql) throws SQLException;
 
     @Override
     default void close() throws IOException{

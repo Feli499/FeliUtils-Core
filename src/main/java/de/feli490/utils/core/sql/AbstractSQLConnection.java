@@ -36,7 +36,7 @@ public abstract class AbstractSQLConnection implements SQLConnection {
             }
     }
 
-    public PreparedStatement createPreparedStatement(String sql) throws SQLException {
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
 
         if (connection == null)
             throw new IllegalStateException("Connection is not initialized!");
@@ -48,6 +48,17 @@ public abstract class AbstractSQLConnection implements SQLConnection {
         preparedStatements.put(sql, preparedStatement);
 
         return preparedStatement;
+    }
+
+    @Override
+    public boolean execute(String sql) throws SQLException {
+        if (connection == null)
+            throw new IllegalStateException("Connection is not initialized!");
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        boolean result = preparedStatement.execute();
+        preparedStatement.close();
+        return true;
     }
 
     @Override

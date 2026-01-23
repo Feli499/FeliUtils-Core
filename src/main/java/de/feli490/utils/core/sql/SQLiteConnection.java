@@ -9,12 +9,13 @@ public class SQLiteConnection extends AbstractSQLConnection {
 
     private final String path;
 
-    public SQLiteConnection(Logger logger, String path, int maxTries) {
+    public SQLiteConnection(Logger logger, String path, int maxTries) throws SQLException {
         super(logger, maxTries);
         this.path = path;
+        connect();
     }
 
-    public SQLiteConnection(Logger logger, String path) {
+    public SQLiteConnection(Logger logger, String path) throws SQLException {
         this(logger, path, 3);
     }
 

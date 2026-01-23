@@ -9,7 +9,7 @@ public abstract class AbstractJdbcSQLConnection extends AbstractSQLConnection {
 
     private final SQLConfig config;
 
-    public AbstractJdbcSQLConnection(Logger logger, SQLConfig config, int maxTries) {
+    public AbstractJdbcSQLConnection(Logger logger, SQLConfig config, int maxTries) throws SQLException {
         super(logger, maxTries);
         this.config = config;
     }

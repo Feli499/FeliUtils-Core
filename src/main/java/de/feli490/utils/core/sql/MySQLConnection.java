@@ -1,5 +1,6 @@
 package de.feli490.utils.core.sql;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class MySQLConnection extends AbstractJdbcSQLConnection {
@@ -13,11 +14,11 @@ public class MySQLConnection extends AbstractJdbcSQLConnection {
         }
     }
 
-    public MySQLConnection(Logger logger, SQLConfig sqlConfig, int maxTries) {
+    public MySQLConnection(Logger logger, SQLConfig sqlConfig, int maxTries) throws SQLException {
         super(logger, sqlConfig, maxTries);
     }
 
-    public MySQLConnection(Logger logger, SQLConfig sqlConfig) {
+    public MySQLConnection(Logger logger, SQLConfig sqlConfig) throws SQLException {
         this(logger, sqlConfig, 3);
     }
 

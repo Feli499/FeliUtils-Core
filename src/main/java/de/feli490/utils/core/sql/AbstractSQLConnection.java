@@ -10,9 +10,10 @@ public abstract class AbstractSQLConnection implements SQLConnection {
     private final int maxTries;
     private Connection connection;
 
-    public AbstractSQLConnection(Logger logger, int maxTries) {
+    public AbstractSQLConnection(Logger logger, int maxTries) throws SQLException {
         this.logger = logger;
         this.maxTries = maxTries;
+        connect();
     }
 
     protected abstract Connection buildConnection() throws SQLException;

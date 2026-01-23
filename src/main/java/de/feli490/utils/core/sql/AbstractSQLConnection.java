@@ -1,7 +1,10 @@
 package de.feli490.utils.core.sql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public abstract class AbstractSQLConnection implements SQLConnection {
@@ -9,6 +12,8 @@ public abstract class AbstractSQLConnection implements SQLConnection {
     private final Logger logger;
     private final int maxTries;
     private Connection connection;
+
+    private final Map<String, PreparedStatement> preparedStatements = new HashMap<>();
 
     public AbstractSQLConnection(Logger logger, int maxTries) throws SQLException {
         this.logger = logger;
@@ -32,12 +37,18 @@ public abstract class AbstractSQLConnection implements SQLConnection {
             }
     }
 
-    @Override
-    public Connection getConnection() {
-        if (this.connection == null) {
-            throw new IllegalStateException("Connection not initialized!");
-        }
-        return this.connection;
+    public PreparedStatement createPreparedStatement(String sql) throws SQLException {
+
+        if (connection == null)
+            throw new IllegalStateException("Connection is not initialized!");
+
+        if (preparedStatements.containsKey(sql))
+            return preparedStatements.get(sql);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatements.put(sql, preparedStatement);
+
+        return preparedStatement;
     }
 
     @Override
@@ -46,12 +57,17 @@ public abstract class AbstractSQLConnection implements SQLConnection {
         if (this.connection == null)
             return;
 
+
         try {
+            for (PreparedStatement preparedStatement : preparedStatements.values()) {
+                preparedStatement.close();
+            }
             this.connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             this.connection = null;
+            preparedStatements.clear();
         }
     }
 }

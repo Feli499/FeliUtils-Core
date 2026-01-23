@@ -18,7 +18,6 @@ public abstract class AbstractSQLConnection implements SQLConnection {
     public AbstractSQLConnection(Logger logger, int maxTries) throws SQLException {
         this.logger = logger;
         this.maxTries = maxTries;
-        connect();
     }
 
     protected abstract Connection buildConnection() throws SQLException;

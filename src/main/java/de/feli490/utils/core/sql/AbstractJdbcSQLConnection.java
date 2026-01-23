@@ -12,6 +12,7 @@ public abstract class AbstractJdbcSQLConnection extends AbstractSQLConnection {
     public AbstractJdbcSQLConnection(Logger logger, SQLConfig config, int maxTries) throws SQLException {
         super(logger, maxTries);
         this.config = config;
+        connect();
     }
 
     public String getHost() {
